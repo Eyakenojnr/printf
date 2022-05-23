@@ -9,7 +9,7 @@
 
 int _printf(const char *format, ...)
 {
-	int sum = -;
+	int sum = 0;
 	va_list ap;
 	char *p, *start;
 	params_t params = PARAMS_INIT;
@@ -29,4 +29,9 @@ int _printf(const char *format, ...)
 			continue;
 		}
 		start = p;
-		p++;:x
+		p++;
+		while (get_flag(p, &params)) /*while char at p is flag char */
+		{
+			p++; /* next char */
+		}
+		p = get_width(p, &params, ap);	
