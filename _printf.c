@@ -2,6 +2,7 @@
 
 /**
  * _printf - prints anything
+ *
  * @format: the format string
  *
  * Return: number of bytes printed
@@ -34,4 +35,16 @@ int _printf(const char *format, ...)
 		{
 			p++; /* next char */
 		}
-		p = get_width(p, &params, ap);	
+		p = get_width(p, &params, ap);
+		if (get_modifier(p, &params))
+			p++;
+		if (!get_specifier(p))
+			sum += print_from_to(start, p,
+					 params.l_modifier || params.h_modifier ? p - 1 : 0);
+		else
+			sum += get_print_func(p, ap, &params);
+	}
+	_putchar(BUF_FLUSH);
+	va_end(ap);
+	return (sum);
+}
