@@ -1,0 +1,76 @@
+.TH _PRINTF 3 "may 26 2022" "0.1" "ALX - _printf"
+
+.SH NAME
+.B _printf\fR \- formatted output conversion
+
+.SH SYNOPSIS
+.B #include \fB"main.h"
+
+.B int printf(const char *\fIformat\fB, ...);
+
+.SH DESCRIPTION
+The function \fB_printf()\fR writes output to \fIstdout\fR, the standard 
+output. This function writes under the control of a \fIformat\fR string that 
+specifies how subsequent arguments (accessible through variable-length 
+argument facilities of stdarg) are converted for output.
+
+.B Return value
+.in +2n
+Once return is successful, \fB_printf()\fR returns the number of characters 
+printed (null byte used to end output to strings excluded).
+
+If output error is encountered, -1 is returned.
+.in
+
+.B Format of the format string
+.in +2n
+The format string is a constant character string which comprises of zero or 
+more directives: ordinary characters (not \fB%\fR) which are copied unchanged 
+to the output stream, and conversion specifications, each of which results in 
+fetching zero or more subsequent arguments. Conversion specifications are 
+introduced by \fB%\fR character and ends with a \fIconversion specifier\fR.
+Between the \fB%\fR character and conversion specifier, there may be (in 
+order) zero or more \fIflags\fR, an optional minimum \fIfield width\fR, an 
+optional \fIprecision\fR and also an optional \fIlength\fR modifier. These 
+arguments must correspond with the conversion specifier, and are used in the 
+order given.
+.in
+
+.B Flag Characters
+.in +2n
+The \fB%\fR character may be followed by zero or more of the following flags:
+
+.RS
+.B #
+.in +2n
+For \fBo\fR conversions, the first character of output string is prefixed with 
+0 if it was not zero already. For x and X conversions, 0x or 0X, respectively, 
+is prepended for non-zero numbers.
+.in
+.RE
+
+.RS
+.B ''
+.in +2n
+(space) A blank is left before a positive numberor an empty string produced by 
+a signed conversion.
+.in
+.RE
+
+.RS
+.B +
+.in +2n
+A (+ or -) sign is always produced right before a number which is produced by 
+signed conversion.
+.in
+.RE
+
+.RS
+.B 0
+.in +2n
+For \fBd\fR, \fBi\fR, \fBo\fR, \fBu\fR, \fBx\fR, and \fBX\fR conversions, the 
+converted value is padded on the left wihth zeros rather than blanks. If the 
+\fB0\fR flag is provide to a numeric conversion with a specified precision, 
+it is ignored.
+.in
+.RE
