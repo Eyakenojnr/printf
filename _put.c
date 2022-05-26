@@ -17,7 +17,7 @@ int _puts(char *str)
 
 /**
  * _putchar - writes the character c to stdout
- * @c: character 
+ * @c: character
  *
  * Return: 1 on success, -1 on failure
  */
