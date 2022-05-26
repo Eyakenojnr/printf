@@ -1,0 +1,29 @@
+.TH _PRINTF 3 "may 26 2022" "0.1" "ALX - _printf"
+
+.SH NAME
+.B _printf\fR \- formatted output conversion
+
+.SH SYNOPSIS
+.B #include \fB"main.h"
+
+.B int printf(const char *\fIformat\fB, ...);
+
+.SH DESCRIPTION
+The function \fB_printf()\fR writes output to \fIstdout\fR, the standard 
+output. This function writes under the control of a \fIformat\fR string that 
+specifies how subsequent arguments (accessible through variable-length argument 
+facilities of stdarg) are converted for output.
+
+.B Return value
+.in +2n
+Once return is successful, \fB_printf()\fR returns the number of characters 
+printed (null byte used to end output to strings excluded).
+
+If output error is encountered, -1 is returned.
+.in
+
+.B Format of the format string
+.in +2n
+The format string is a constant character string which comrises of zero or more 
+directives: ordinary characters (not \fB%\fR) which are copied unchanged to 
+the output
