@@ -1,11 +1,10 @@
 #include "main.h"
 
 /**
- * _isdigit - function that checks if character is a digit
- *
+ * _isdigit - checks if character is digit
  * @c: the character to check
  *
- * Return: 1 if it's a digit, 0 if otherwise
+ * Return: 1 if digit, 0 otherwise
  */
 int _isdigit(int c)
 {
@@ -13,9 +12,8 @@ int _isdigit(int c)
 }
 
 /**
- * _strlen - function that checks for length of a string
- *
- * @s: string to check length
+ * _strlen - returns the length of a string
+ * @s: the string whose length to check
  *
  * Return: integer length of string
  */
@@ -29,8 +27,7 @@ int _strlen(char *s)
 }
 
 /**
- * print_number - function that prints a number with options
- *
+ * print_number - prints a number with options
  * @str: the base number as a string
  * @params: the parameter struct
  *
@@ -48,11 +45,12 @@ int print_number(char *str, params_t *params)
 		str++;
 		i--;
 	}
-	if (params->precision != UNIT_MAX)
+	if (params->precision != UINT_MAX)
 		while (i++ < params->precision)
 			*--str = '0';
 	if (neg)
 		*--str = '-';
+
 	if (!params->minus_flag)
 		return (print_number_right_shift(str, params));
 	else
@@ -61,7 +59,6 @@ int print_number(char *str, params_t *params)
 
 /**
  * print_number_right_shift - prints a number with options
- *
  * @str: the base number as a string
  * @params: the parameter struct
  *
@@ -84,10 +81,10 @@ int print_number_right_shift(char *str, params_t *params)
 		i++;
 	if (neg && pad_char == '0')
 		n += _putchar('-');
-	if (params->plus_flag && !neg2 && pad_cha '0' && !params->unsign)
+	if (params->plus_flag && !neg2 && pad_char == '0' && !params->unsign)
 		n += _putchar('+');
-	else if (!params->plus_flag && params->space_flag && !neg2 && !params->unsign
-			 && params->zero_flag)
+	else if (!params->plus_flag && params->space_flag && !neg2 &&
+			 !params->unsign && params->zero_flag)
 		n += _putchar(' ');
 	while (i++ < params->width)
 		n += _putchar(pad_char);
@@ -95,15 +92,15 @@ int print_number_right_shift(char *str, params_t *params)
 		n += _putchar('-');
 	if (params->plus_flag && !neg2 && pad_char == ' ' && !params->unsign)
 		n += _putchar('+');
-	else if (!params->plus_flag && params->space_flag && !neg2 && !parans->unsign
-			 && !params->zero_flag)
+	else if (!params->plus_flag && params->space_flag && !neg2 &&
+			 !params->unsign && !params->zero_flag)
 		n += _putchar(' ');
 	n += _puts(str);
 	return (n);
 }
 
 /**
- * print_number_left_shift - prints a number witth options
+ * print_number_left_shift - prints a number with options
  * @str: the base number as a string
  * @params: the parameter struct
  *
