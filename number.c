@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * *convert - converter function
+ * *convert - converter function, a clone of itoa
  *
  * @num: number
  * @base: base
  * @flags: argument flags
- * @params: parameter struct
+ * @params: paramater struct
  *
  * Return: string
  */
@@ -14,8 +14,8 @@ char *convert(long int num, int base, int flags, params_t *params)
 {
 	static char *array;
 	static char buffer[50];
-	char *ptr;
 	char sign = 0;
+	char *ptr;
 	unsigned long n = num;
 	(void)params;
 
@@ -27,10 +27,12 @@ char *convert(long int num, int base, int flags, params_t *params)
 	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	ptr = &buffer[49];
 	*ptr = '\0';
+
 	do {
 		*--ptr = array[n % base];
 		n /= base;
 	} while (n != 0);
+
 	if (sign)
 		*--ptr = sign;
 	return (ptr);
@@ -38,8 +40,9 @@ char *convert(long int num, int base, int flags, params_t *params)
 
 /**
  * print_unsigned - prints unsigned integer numbers
- * @ap: the pointer to argument
- * @params: the struct parameters
+ *
+ * @ap: argument pointer
+ * @params: the parameters struct
  *
  * Return: bytes printed
  */
@@ -59,8 +62,9 @@ int print_unsigned(va_list ap, params_t *params)
 
 /**
  * print_address - prints address
- * @ap: the pointer to argument
- * @params: the struct parameters
+ *
+ * @ap: argument pointer
+ * @params: the parameters struct
  *
  * Return: bytes printed
  */
