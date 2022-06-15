@@ -1,10 +1,9 @@
 #include "main.h"
 
 /**
- * print_hex - function that prints unsigned hex numbers in lowercase format
- *
- * @ap: argument pointer
- * @params: parameters struct
+ * print_hex - prints unsigned hex numbers in lowercase
+ * @ap: the argument pointer
+ * @params: the parameters struct
  *
  * Return: bytes printed
  */
@@ -20,6 +19,7 @@ int print_hex(va_list ap, params_t *params)
 		l = (unsigned short int)va_arg(ap, unsigned int);
 	else
 		l = (unsigned int)va_arg(ap, unsigned int);
+
 	str = convert(l, 16, CONVERT_UNSIGNED | CONVERT_LOWERCASE, params);
 	if (params->hashtag_flag && l)
 	{
@@ -31,10 +31,9 @@ int print_hex(va_list ap, params_t *params)
 }
 
 /**
- * print_HEX - function that prints hex numbers in uppercase format
- *
- * @ap: argument pointer
- * @params: parameter struct
+ * print_HEX - prints unsigned hex numbers in uppercase
+ * @ap: the argument pointer
+ * @params: the parameters struct
  *
  * Return: bytes printed
  */
@@ -49,12 +48,12 @@ int print_HEX(va_list ap, params_t *params)
 	else if (params->h_modifier)
 		l = (unsigned short int)va_arg(ap, unsigned int);
 	else
-		l = (unsigned short)va_arg(ap, unsigned int);
+		l = (unsigned int)va_arg(ap, unsigned int);
+
 	str = convert(l, 16, CONVERT_UNSIGNED, params);
 	if (params->hashtag_flag && l)
 	{
 		*--str = 'X';
-
 		*--str = '0';
 	}
 	params->unsign = 1;
@@ -62,10 +61,10 @@ int print_HEX(va_list ap, params_t *params)
 }
 /**
  * print_binary - prints unsigned binary number
- * @ap: the argument of pointer
- * @params: the struct parameters
+ * @ap: the argument pointer
+ * @params: the parameters struct
  *
- * Return: prints bytes
+ * Return: bytes printed
  */
 int print_binary(va_list ap, params_t *params)
 {
@@ -81,7 +80,7 @@ int print_binary(va_list ap, params_t *params)
 
 /**
  * print_octal - prints unsigned octal numbers
- * @ap: pointer to argument
+ * @ap: the argument pointer
  * @params: the parameters struct
  *
  * Return: bytes printed
