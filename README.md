@@ -1,3 +1,1 @@
-# C - printf
-
-Author: Joshua Alonge
+#0x11. C - printf
