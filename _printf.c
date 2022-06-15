@@ -1,56 +1,50 @@
 #include "main.h"
-#include <stdarg.h>
-#include <stdio.h>
+
 /**
- * _print - print all parameters
- * @format: list of types of arguments passed to the function
- * Return: int
+ * _printf - prints anything
+ *
+ * @format: the format string
+ *
+ * Return: number of bytes printed
  */
 int _printf(const char *format, ...)
 {
+	int sum = 0;
 	va_list ap;
-	int i, j, m = 0, n = 0;
-	printer ss[] = {
-		{"s", print_string},{"c", print_char},
-		{"d", print_int},{"i", print_int},
-		{"b", print_in_bin},{"u", print_unsint},
-		{"o", print_octint},{"x", print_hex},
-		{"X", print_uphex},{"S", print_stringx},
-		{"p", print_addr},{"R", print_rot13},
-		{"r", print_rev},{"%", print_perc},
-		{"l", print_long},{"h", print_short}
-	};
+	char *p, *start;
+	params_t params = PARAMS_INIT;
 
-	if (format == NULL)
+	va_start(ap, format);
+
+	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
-	va_start (ap, format);
-	for (i = 0; format[i] && format; i++)
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (p = (char *)format; *p; p++)
 	{
-		if (format[i] == '%')
+		init_params(&params, ap);
+		if (*p != '%')
 		{
-			for (j = 0; j < 16; j++)
-			{
-				if (*(format + i + 1) == *(ss[j].sign))
-				{
-					m += ss[j].print(ap, format, i);
-					n++;
-					i++;
-					if (j == 14 || j == 15)
-					{
-						i++;
-						m--;
-					}
-					break;
-				}
-				if (j == 15 && format[i + 1] == '\0')
-					m--;
-				if (j == 15 && format[i + 1] != '\0')
-					_putchar('%');
-			}
+			sum += _putchar(*p);
+			continue;
 		}
+		start = p;
+		p++;
+		while (get_flag(p, &params))
+		{
+			p++;
+		}
+		p = get_width(p, &params, ap);
+		p = get_precision(p, &params, ap);
+		if (get_modifier(p, &params))
+			p++;
+		if (!get_specifier(p))
+			sum += print_from_to(start, p,
+					 params.l_modifier || params.h_modifier ? p - 1 : 0);
 		else
-			_putchar(format[i]);
+			sum += get_print_func(p, ap, &params);
 	}
-	va_end (ap);
-    return ((i - (n * 2)) + m);
+	_putchar(BUF_FLUSH);
+	va_end(ap);
+	return (sum);
 }
