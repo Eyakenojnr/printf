@@ -74,3 +74,213 @@ converted value is padded on the left wihth zeros rather than blanks. If the
 it is ignored.
 .in
 .RE
+
+.RS
+.B -
+.in +2n
+The converted value is left-justified (padded on the right side with blanks
+ instead of on the left side with blanks or zeroes). Overrides a \fB0\fR flag.
+.in
+.RE
+
+.B Field Width
+.in +2n
+After the flags, a minimum field width may be specified by a decimal digit 
+string. The first digit should always be non-zero. If the converted value has 
+fewer characters than the provided width, the resulting output is then padded 
+on the left or right side with spaces (which depends on whether the \fB-\fR 
+flag was provided).
+
+Alternatively, the width may be provied as an argument using the '*' character.
+ For example, in the following:
+.in
+
+.in +2n
+_printf("%*d\\n", 6, 1);
+.in
+
+.in +2nn
+the said argument 6 is considered the width for the conversion of the decimal 1
+.in
+
+.B Precision
+.in +2n
+After a flag or provided width, a precision may be specified by a '.' character
+followed by a decimal digit string. For \fBd\fR, \fBi\fR, \fBo\fR, \fBu\fR, 
+\fBx\fR, and \fBX\fR conversions, the precision specifies the minimum number 
+of digits to appear. For \fBs\fR and \fBS\fR conversions, the precision 
+specifies the maximum characters to be printed.
+
+However, precision may be provided as an argument using the character '*' 
+after the '.'. For example:
+.in
+
+.in +2n
+_printf("%.*d\\n", 6, 1);
+.in
+
+.in +2n
+the argument 6 is considered the precision for the conversion of the decimal 1
+.in
+
+.B Conversion Specifiers
+.in +2n
+A character which specifies the type of conversion to be applied. The 
+conversion specifiers and their meaning are:
+
+.RS
+.B d, i
+.in +2n
+The \fIint\fR argument is converted into signed decimal notation.
+.in
+.RE
+
+.RS
+.B b
+.in +2n
+The \fIunsigned int\fR argument is converted into binary.
+.in
+.RE
+
+.RS
+.B o, u, x, X
+.in +2n
+The \fIunsigned int\fR argument is converted into unsigned octal (\fBo\fR), 
+unsigned decimal (\fBu\fR), or unsigned hexadecimal (\fBx\fR and \fBX\fR) 
+notation. The letters \fBabcdef\fR are used for \fBx\fR conversions; the 
+letters \fBABCDEF\fR are used for \fBX\fR conversions.
+.in
+.RE
+
+.RS
+.B c
+.in +2n
+The \fIint\fR argument is converted into an \fIunsigned char\fR, and the 
+resulting character is written.
+.in
+.RE
+
+.RS
+.B s
+.in +2n
+The \fIconst char *\fR argument is expected to be a pointer to a character 
+array (pointer to a string). Characters from the array are written starting 
+with the first element of the array and ending at, excluding, the terminating 
+null byte ('\\0').
+.in
+.RE
+
+.RS
+.B S
+.in +2n
+Identical to the \fBS\fR conversion specifier, except all non-printable 
+characters in the array (ie. characters with an ASCII value < 32 or >= 127) 
+are written as \fB\\x\fR followed with the ASCII code value in hexadecimal 
+(upper case, two characters).
+.in
+.RE
+
+.RS
+.B r
+.in +2n
+Identical to \fBs\fR conversion specifier, except characters from the array 
+are written in reverse, starting with (but excluding) the terminating null 
+byte ('\\0') and ending at the first element of the array.
+.in
+.RE
+
+.RS
+.B R
+.in +2n
+Identical to the \fBs\fR conversion specifier, except each character of the 
+array is converted to its corresponding character in ROT13 before being written
+.in
+.RE
+
+.RS
+.B p
+.in +2n
+The address of the argument is written. The address is written in hexadecimal 
+with a leading \fI0x\fR.
+.in
+.RE
+
+.RS
+.B %
+.in +2n
+A '%' character is written. No argument is converted. The complete conversion 
+specification is '%%'.
+.in
+.RE
+
+.SH BUGS
+Code such as \fB_printf(\fIfoo\fB);\fR possibly indicates a bug, since 
+\fIfoo\fR might contain a % character.
+
+.SH EXAMPLE
+To print the address of Abuja National Mosque in the form of "No.1012 
+Independence Avenue, Abuja, 900103 FCT", followed by a new line, where 
+\fIstreet\fR, \fIcity\fR, and \fIstate\fR are pointers to strings:
+
+.RS
+#include "main.h"
+
+int main(void)
+
+{
+
+	char *street = "Independence Avenue";
+
+	char *city = "Abuja",
+
+	char *state = "FCT";
+
+	printf("%d %s, %s, %s, %d\\n", 1012, street, city, state, 900103);
+
+}
+.RE
+
+To print the result of the basic mathematical operations prepended by signs 
+and all numbers printed with a minimum precision of two digits:
+
+.RS
+#include "holberton.h"
+
+int main(void)
+
+{
+
+	_printf("%.2d + %.2d = %+.2d\\n", 1, 2, 1 + 2);
+
+	_printf("%d - %d = %+d\\n", 10, 20, 10 - 20);
+
+}
+.RE
+
+To print the values of LONG_MAX and LONG_MIN aligned and 
+left-justified with a width of 30:
+
+.RS
+#include "main.h"
+
+#include <limits.h>
+
+int main(void)
+
+{
+
+	_printf("% -30ld -> LONG_MAX\\n", LONG_MAX);
+
+	_printf("%-30ld -> LONG_MIN\\n", LONG_MIN);
+
+}	
+.RE
+
+.SH SEE ALSO
+printf(3)
+
+The \fB_printf()\fR function emulates the functionality of C's standard library
+ function \fBprintf()\fR. This man page borrows from the corresponding Linux 
+man page printf(3).
+
+.SH AUTHOR Uduak Umanah and Alonge Joshua
